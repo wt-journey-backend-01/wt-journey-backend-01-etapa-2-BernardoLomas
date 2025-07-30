@@ -1,0 +1,241 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API do Departamento de Polícia",
+    "description": "Documentação da API RESTful para gerenciamento de agentes e casos policiais.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/agentes": {
+      "get": {
+        "summary": "Listar todos os agentes",
+        "responses": {
+          "200": {
+            "description": "Lista de agentes retornada com sucesso"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo agente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Agente criado com sucesso"
+          }
+        }
+      }
+    },
+    "/agentes/{id}": {
+      "get": {
+        "summary": "Buscar agente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agente encontrado com sucesso"
+          },
+          "404": {
+            "description": "Agente não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um agente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agente atualizado com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar agente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Agente deletado com sucesso"
+          }
+        }
+      }
+    },
+    "/casos": {
+      "get": {
+        "summary": "Listar todos os casos",
+        "responses": {
+          "200": {
+            "description": "Lista de casos retornada com sucesso"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo caso",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Caso"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Caso criado com sucesso"
+          }
+        }
+      }
+    },
+    "/casos/{id}": {
+      "get": {
+        "summary": "Buscar caso por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Caso encontrado com sucesso"
+          },
+          "404": {
+            "description": "Caso não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um caso por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Caso"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Caso atualizado com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar caso por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Caso deletado com sucesso"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Agente": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid", "example": "d290f1ee-6c54-4b01-90e6-d701748f0851" },
+          "nome": { "type": "string", "example": "João Silva" },
+          "dataDeIncorporacao": { "type": "string", "format": "date", "example": "2020-05-10" },
+          "cargo": { "type": "string", "example": "Investigador" }
+        },
+        "required": ["nome", "dataDeIncorporacao", "cargo"]
+      },
+      "Caso": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid", "example": "550e8400-e29b-41d4-a716-446655440000" },
+          "titulo": { "type": "string", "example": "Roubo a banco" },
+          "descricao": { "type": "string", "example": "Assalto ocorrido na agência central" },
+          "status": { "type": "string", "example": "em investigação" },
+          "agente_id": { "type": "string", "format": "uuid", "example": "d290f1ee-6c54-4b01-90e6-d701748f0851" }
+        },
+        "required": ["titulo", "descricao", "status", "agente_id"]
+      }
+    }
+  }
+}
